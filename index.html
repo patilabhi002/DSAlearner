@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DSA Quick Learn</title>
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#6c5ce7"><link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#f5f6ff;--card:#fff;--tx:#1b1b3a;--mut:#6a6a8e;--pri:#6c5ce7;--pri2:#00b8d9;--ok:#16a34a;--bad:#dc2626;--bd:#e3e4f5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12122a;--card:#1d1d3b;--tx:#eef;--mut:#a3a3c8;--bd:#2f2f58}}
+:root[data-theme="dark"]{--bg:#12122a;--card:#1d1d3b;--tx:#eef;--mut:#a3a3c8;--bd:#2f2f58}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+.screen{display:none;min-height:100vh}.screen.on{display:block}
+#welcome.on{display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;padding:48px 24px 40px;background:linear-gradient(160deg,#6c5ce7,#00b8d9);color:#fff;overflow:hidden;position:relative}
+.orb{position:absolute;border-radius:50%;background:rgba(255,255,255,.15);animation:float 7s ease-in-out infinite}
+.o1{width:180px;height:180px;top:-40px;left:-40px}.o2{width:120px;height:120px;bottom:120px;right:-30px;animation-delay:-3s}.o3{width:70px;height:70px;top:35%;left:12%;animation-delay:-5s}
+@keyframes float{50%{transform:translateY(-28px) scale(1.08)}}
+.hero{margin-top:12vh;position:relative;z-index:1}
+.logo{font-size:64px;display:inline-block;animation:pop 1s cubic-bezier(.3,1.6,.5,1) both,bob 3s 1s ease-in-out infinite}
+@keyframes pop{from{transform:scale(0) rotate(-180deg);opacity:0}}@keyframes bob{50%{transform:translateY(-10px)}}
+.hero h1{font-size:2.2rem;margin:16px 0 8px;animation:up .8s .4s both}.hero p{opacity:.92;max-width:320px;margin:0 auto;animation:up .8s .7s both;line-height:1.5}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:22px;animation:up .8s 1s both}
+.chips span{background:rgba(255,255,255,.2);padding:6px 12px;border-radius:99px;font-size:.85rem}
+@keyframes up{from{transform:translateY(24px);opacity:0}}
+.btn{border:0;border-radius:14px;padding:15px 36px;font-size:1.05rem;font-weight:700;cursor:pointer;background:#fff;color:var(--pri);box-shadow:0 8px 24px rgba(0,0,0,.2);position:relative;z-index:1;animation:up .8s 1.3s both,pulse 2s 2.2s infinite}
+@keyframes pulse{50%{transform:scale(1.06)}}
+.wrap{max-width:760px;margin:0 auto;padding:16px 16px 90px}
+header.top{display:flex;align-items:center;gap:10px;margin-bottom:12px}header.top h2{margin:0;font-size:1.25rem;flex:1}
+.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+.tabs button{flex:1;border:0;background:none;padding:12px;color:var(--mut);font-weight:600;font-size:.95rem;cursor:pointer}.tabs button.on{color:var(--pri)}
+.search{display:flex;align-items:center;gap:8px;background:var(--card);border:2px solid var(--bd);border-radius:16px;padding:4px 14px}
+.search:focus-within{border-color:var(--pri)}.search input{flex:1;border:0;outline:0;background:none;color:var(--tx);font-size:1rem;padding:12px 0}
+.tags{display:flex;gap:8px;overflow-x:auto;padding:12px 0}.tag{white-space:nowrap;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:99px;padding:7px 14px;cursor:pointer;font-size:.88rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:16px;margin-bottom:12px;animation:up .35s both}
+.card h3{margin:0 0 6px;display:flex;justify-content:space-between;gap:8px}.badge{font-size:.72rem;background:var(--pri);color:#fff;border-radius:99px;padding:3px 9px;font-weight:600;align-self:flex-start}
+.card p{color:var(--mut);margin:4px 0 10px;line-height:1.5;font-size:.93rem}.card ul{margin:0 0 12px;padding-left:18px;font-size:.9rem;line-height:1.55}
+.cx{font-family:ui-monospace,Menlo,monospace;font-size:.82rem;background:var(--bg);border-radius:10px;padding:8px 10px;margin-bottom:12px}
+.links{display:flex;gap:8px;flex-wrap:wrap}.links a{flex:1;min-width:90px;text-align:center;text-decoration:none;color:#fff;border-radius:12px;padding:10px 6px;font-size:.85rem;font-weight:600}
+.yt{background:#e11d48}.art{background:var(--pri)}.pdf{background:#0e9f6e}
+.empty{text-align:center;color:var(--mut);padding:40px 10px}
+.q{font-weight:700;margin:6px 0 12px;line-height:1.45}.opt{display:block;width:100%;text-align:left;background:var(--bg);color:var(--tx);border:2px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:8px;font-size:.95rem;cursor:pointer}
+.opt.right{border-color:var(--ok);background:rgba(22,163,74,.15)}.opt.wrong{border-color:var(--bad);background:rgba(220,38,38,.15)}
+.prog{height:8px;background:var(--bd);border-radius:9px;overflow:hidden;margin-bottom:14px}.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--pri),var(--pri2));transition:width .3s}
+.exp{font-size:.88rem;color:var(--mut);margin:8px 0;line-height:1.5}.pri{background:var(--pri);color:#fff;box-shadow:none;animation:none;padding:12px 26px}
+.score{font-size:3rem;font-weight:800;text-align:center;color:var(--pri)}
+.lwrap{max-width:380px;margin:0 auto;padding:40px 22px;text-align:center}.lwrap h1{margin:12px 0 4px;font-size:1.6rem}.sub{color:var(--mut);margin:0}
+.lwrap label{display:block;text-align:left;font-size:.85rem;margin:14px 0 6px;color:var(--mut);font-weight:600}
+.lwrap input{width:100%;padding:13px;border-radius:12px;border:2px solid var(--bd);background:var(--card);color:var(--tx);font-size:1rem;outline:0}.lwrap input:focus{border-color:var(--pri)}
+.seg{display:flex;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:4px;margin:18px 0 4px}.seg button{flex:1;border:0;background:none;padding:10px;border-radius:9px;font-weight:700;color:var(--mut);cursor:pointer}.seg button.on{background:var(--pri);color:#fff}
+.pwr{position:relative}.pwr input{padding-right:46px}.pwr button{position:absolute;right:6px;top:6px;border:0;background:none;font-size:1.1rem;cursor:pointer;padding:7px}
+.msg{color:var(--bad);min-height:20px;margin:10px 0;font-size:.9rem}.wide{width:100%}
+.hh{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.hh h2{margin:0;font-size:1.6rem;text-transform:capitalize}.hh small{color:var(--mut)}
+.hero2{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#fff;border-radius:24px;padding:22px;background:linear-gradient(135deg,#6c5ce7,#a55eea 50%,#00b8d9);box-shadow:0 14px 34px rgba(108,92,231,.35);position:relative;overflow:hidden;animation:up .5s both}
+.hero2:before{content:'';position:absolute;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.14);right:-40px;top:-60px;animation:float 7s ease-in-out infinite}
+.hero2 p{margin:4px 0 14px;opacity:.9}.hl,.hero2 svg{position:relative}
+.cta{border:0;border-radius:12px;background:#fff;color:var(--pri);font-weight:700;padding:10px 14px;cursor:pointer;font-size:.88rem}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.st{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px 6px;text-align:center;animation:up .5s .1s both}.st b{display:block;font-size:1.05rem}.st small{color:var(--mut)}
+.sec{margin:20px 0 10px;font-size:1rem}.qa{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.qa button{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:16px;padding:14px 6px;font-weight:600;font-size:.82rem;cursor:pointer;transition:transform .15s}.qa button:active{transform:scale(.95)}.qa i{display:block;font-style:normal;font-size:1.6rem;margin-bottom:6px}
+.hi{display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd)}.hi:last-child{border:0}.hi small{display:block;color:var(--mut)}.hd{font-size:1.3rem}
+.cr{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:.88rem}.cr span{width:90px}.cr .prog{flex:1;margin:0}
+.mark{width:100%;margin-top:8px;border:2px dashed var(--bd);background:none;color:var(--tx);border-radius:12px;padding:10px;font-weight:600;cursor:pointer}.mark.on{border:2px solid var(--ok);color:var(--ok);background:rgba(22,163,74,.12)}
+.tabs button{padding:10px 4px;font-size:.78rem;line-height:1.3}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="lgg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6c5ce7"/><stop offset="1" stop-color="#00b8d9"/></linearGradient></defs><symbol id="lg" viewBox="0 0 100 100"><rect x="2" y="2" width="96" height="96" rx="24" fill="#fff" stroke="#e3e4f5"/><g stroke="url(#lgg)" stroke-width="4" stroke-linecap="round"><path d="M50 24L28 48M50 24L72 48M28 48L18 62M28 48L38 62"/></g><g fill="url(#lgg)"><circle cx="50" cy="22" r="9"/><circle cx="28" cy="47" r="8"/><circle cx="72" cy="47" r="8"/><circle cx="18" cy="62" r="5.5"/><circle cx="38" cy="62" r="5.5"/></g><text x="50" y="90" text-anchor="middle" font-family="system-ui,Segoe UI,Arial,sans-serif" font-size="22" font-weight="800" fill="url(#lgg)" letter-spacing="1">DSA</text></symbol></svg>
+
+<section id="welcome" class="screen on">
+<div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+<div class="hero"><div class="logo"><svg width="112" height="112" viewBox="0 0 100 100" style="display:block;filter:drop-shadow(0 10px 18px rgba(0,0,0,.25))"><use href="#lg"/></svg></div><h1>Welcome to DSA Quick Learn</h1>
+<p>Master Data Structures &amp; Algorithms with videos, notes and practice tests.</p>
+<div class="chips"><span>📹 Videos</span><span>📄 PDF Notes</span><span>🧠 Aptitude Test</span></div></div>
+<button class="btn" onclick="start()">Get Started →</button>
+</section>
+
+<section id="login" class="screen"><div class="lwrap">
+<svg width="72" height="72" viewBox="0 0 100 100"><use href="#lg"/></svg>
+<h1 id="ltitle">Welcome back</h1><p class="sub" id="lsub">Log in to continue learning</p>
+<div class="seg"><button id="m1" class="on" onclick="setMode('in')">Log in</button><button id="m2" onclick="setMode('up')">Sign up</button></div>
+<label for="em">Email</label><input id="em" type="email" autocomplete="email" placeholder="you@example.com">
+<label for="pw">Password</label><div class="pwr"><input id="pw" type="password" autocomplete="current-password" placeholder="At least 6 characters"><button type="button" onclick="eye()" aria-label="Show password">👁</button></div>
+<div id="c2" style="display:none"><label for="pw2">Confirm password</label><input id="pw2" type="password" autocomplete="new-password" placeholder="Re-enter password"></div>
+<div id="msg" class="msg"></div><button class="btn pri wide" id="sub" onclick="submit()">Log in</button>
+</div></section>
+
+<section id="app" class="screen"><div class="wrap">
+<div id='home'></div>
+<div id='prog' style='display:none'></div>
+<div id="learn" style="display:none">
+<header class="top"><svg width="40" height="40" viewBox="0 0 100 100"><use href="#lg"/></svg><h2>DSA Quick Learn</h2><button class="tag" onclick="logout()">Log out</button></header>
+<div class="search"><span>🔍</span><input id="q" placeholder="Try: stack, graph, dynamic programming…" autocomplete="off"></div>
+<div class="tags" id="tags"></div><div id="res"></div>
+</div>
+<div id="apt" style="display:none"><header class="top"><h2>🧠 Aptitude Test</h2></header><div id="quiz"></div></div>
+</div>
+<nav class='tabs'><button class='on' id='t0' onclick='tab(0)'>🏠<br>Home</button><button id='t1' onclick='tab(1)'>📚<br>Learn</button><button id='t2' onclick='tab(2)'>🧠<br>Aptitude</button><button id='t3' onclick='tab(3)'>📈<br>Progress</button></nav>
+</section>
+
+<script>
+const T=[
+["Big-O Notation","Basics","Describes how runtime or memory grows with input size n.",["O(1) constant, O(log n), O(n), O(n log n), O(n²)","Drop constants and lower-order terms","Check best, average and worst cases"],"Common: O(1) < O(log n) < O(n) < O(n log n) < O(n²)"],
+["Array","Linear","Contiguous memory holding elements accessed by index.",["Random access in O(1)","Insert/delete in the middle shifts elements","Dynamic arrays double capacity when full"],"Access O(1) | Search O(n) | Insert O(n)"],
+["String","Linear","Sequence of characters; often immutable. Common in pattern and parsing problems.",["Use hash maps for frequency counts","Two pointers solve palindromes","KMP / Rabin-Karp for pattern search"],"Concat in loop O(n²) | Search O(n)"],
+["Linked List","Linear","Nodes connected by pointers; singly, doubly or circular.",["Fast &amp; slow pointers detect cycles","Reverse by re-linking next pointers","Use a dummy head node to simplify edge cases"],"Access O(n) | Insert at head O(1)"],
+["Stack","Linear","LIFO structure: push and pop from the top.",["Used in recursion, undo, expression evaluation","Balanced parentheses is a classic","Monotonic stack for next greater element"],"Push/Pop/Peek O(1)"],
+["Queue","Linear","FIFO structure. Variants: deque, circular, priority queue.",["BFS uses a queue","Implement with two stacks","Sliding window max uses a deque"],"Enqueue/Dequeue O(1)"],
+["Hash Table","Hashing","Key-value store using a hash function to find a bucket.",["Collisions: chaining or open addressing","Great for two-sum, anagrams, counting","Load factor controls resizing"],"Avg O(1) | Worst O(n)"],
+["Binary Tree","Trees","Each node has up to two children. Traversals: inorder, preorder, postorder, level order.",["Height, diameter, LCA are common problems","DFS recursion vs BFS queue","Balanced tree keeps height O(log n)"],"Traversal O(n)"],
+["Binary Search Tree","Trees","Left subtree smaller, right subtree larger. Inorder traversal gives sorted order.",["Search/insert follow one path","AVL and Red-Black trees self-balance","Validate BST using min/max bounds"],"Avg O(log n) | Skewed O(n)"],
+["Heap / Priority Queue","Trees","Complete binary tree where parent is ≥ (max-heap) or ≤ (min-heap) its children.",["Top-K problems","Heap sort","Median of a stream with two heaps"],"Insert O(log n) | Peek O(1)"],
+["Trie","Trees","Prefix tree storing strings character by character.",["Autocomplete and spell check","Prefix lookup in O(length)","Uses more memory than hash sets"],"Insert/Search O(L)"],
+["Graph","Graphs","Vertices connected by edges; directed/undirected, weighted/unweighted.",["Adjacency list vs matrix","BFS for shortest path in unweighted graphs","Dijkstra, Bellman-Ford, topological sort, union-find"],"BFS/DFS O(V+E)"],
+["Sorting","Algorithms","Arranging data in order: bubble, selection, insertion, merge, quick, heap, counting.",["Merge sort is stable, O(n log n)","Quick sort is fast in practice, worst O(n²)","Know when stability matters"],"Merge/Heap O(n log n)"],
+["Binary Search","Algorithms","Halve a sorted search space each step.",["Works on answer space too","Watch out for mid overflow and off-by-one","Lower/upper bound variants"],"O(log n)"],
+["Recursion","Algorithms","A function solving smaller versions of itself with a base case.",["Always define base case","Draw the recursion tree","Memoize repeated subproblems"],"Depends on calls × work per call"],
+["Two Pointers / Sliding Window","Techniques","Move pointers or a window across data to avoid nested loops.",["Sorted array pair sum","Longest substring without repeats","Fixed vs variable window"],"Usually O(n)"],
+["Greedy","Algorithms","Pick the locally best option hoping for a global optimum.",["Activity selection, Huffman coding","Prove with exchange argument","Fails when choices affect future options"],"Often O(n log n)"],
+["Backtracking","Algorithms","Build solutions step by step and undo choices that fail.",["N-Queens, Sudoku, permutations","Prune early to save time","Choose → explore → un-choose"],"Often exponential"],
+["Dynamic Programming","Algorithms","Solve overlapping subproblems once and reuse results (memoization or tabulation).",["Define state, transition, base case","Knapsack, LCS, coin change, LIS","Optimize space with rolling arrays"],"States × transition cost"]
+];
+const Q=[
+["Time complexity of binary search?",["O(n)","O(log n)","O(n log n)","O(1)"],1,"Each step halves the search space."],
+["Which structure is LIFO?",["Queue","Stack","Heap","Graph"],1,"Last in, first out is a stack."],
+["Which traversal of a BST gives sorted output?",["Preorder","Postorder","Inorder","Level order"],2,"Inorder visits left, root, right."],
+["Next number: 2, 6, 12, 20, 30, ?",["40","42","44","38"],1,"Differences 4,6,8,10,12 → 30+12=42."],
+["A train 150 m long passes a pole in 15 s. Speed?",["10 m/s","15 m/s","20 m/s","25 m/s"],0,"150 / 15 = 10 m/s."],
+["If 20% of a number is 50, the number is?",["200","250","300","100"],1,"50 / 0.2 = 250."],
+["Which algorithm uses a queue?",["DFS","BFS","Quick sort","Binary search"],1,"BFS explores level by level using a queue."],
+["Worst-case time of quick sort?",["O(n log n)","O(n)","O(n²)","O(log n)"],2,"Bad pivots cause unbalanced splits."],
+["A can finish work in 10 days, B in 15. Together?",["5 days","6 days","8 days","12 days"],1,"1/10 + 1/15 = 1/6 → 6 days."],
+["Which structure gives average O(1) lookup?",["Linked list","Hash table","BST","Array (unsorted)"],1,"Hashing maps keys to buckets directly."]
+];
+const $=id=>document.getElementById(id),enc=encodeURIComponent;
+function go(s){document.querySelectorAll('.screen').forEach(e=>e.classList.remove('on'));$(s).classList.add('on');window.scrollTo(0,0);if(s==='app')tab(0)}
+function tab(n){['home','learn','apt','prog'].forEach((v,i)=>{$(v).style.display=i==n?'':'none';$('t'+i).className=i==n?'on':''});window.scrollTo(0,0);if(n==0)renderHome();if(n==1)render();if(n==2&&!qs.started)startQuiz();if(n==3)renderProg()}
+function render(){const v=$('q').value.trim().toLowerCase();
+const L=T.filter(t=>!v||(t[0]+t[1]+t[2]+t[3].join(' ')).toLowerCase().includes(v));
+if(!L.length){const k=enc($('q').value+' data structures algorithms');
+$('res').innerHTML=`<div class="empty">No built-in topic found.<br>Try these searches:</div><div class="links"><a class="yt" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=${k}">▶ Videos</a><a class="art" target="_blank" rel="noopener" href="https://www.google.com/search?q=${k}">🔗 Articles</a><a class="pdf" target="_blank" rel="noopener" href="https://www.google.com/search?q=${k}+filetype:pdf">📄 PDF</a></div>`;return}
+$('res').innerHTML=L.map(t=>{const k=enc(t[0]+' data structure algorithm');
+return `<div class="card"><h3>${t[0]}<span class="badge">${t[1]}</span></h3><p>${t[2]}</p><ul>${t[3].map(x=>`<li>${x}</li>`).join('')}</ul><div class="cx">⏱ ${t[4]}</div>
+<div class="links"><a class="yt" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=${k}+tutorial">▶ Videos</a><a class="art" target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/search/?q=${enc(t[0])}">🔗 Articles</a><a class="pdf" target="_blank" rel="noopener" href="https://www.google.com/search?q=${k}+notes+filetype:pdf">📄 PDF Notes</a></div><button class='mark ${done(T.indexOf(t))?'on':''}' onclick='learned(${T.indexOf(t)})'>${done(T.indexOf(t))?'✓ Learned':'Mark as learned'}</button></div>`}).join('')}
+$('tags').innerHTML=['Array','Stack','Tree','Graph','Sorting','Dynamic Programming','Hash'].map(x=>`<button class="tag" onclick="$('q').value='${x}';render()">${x}</button>`).join('');
+$('q').addEventListener('input',render);
+const mem={};
+const LS={get(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return mem[k]||null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){mem[k]=v}}};
+let mode='in';
+async function hash(p){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(p));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return btoa(p)}}
+function start(){go(LS.get('dsa_session')?'app':'login')}
+function err(t){$('msg').textContent=t}
+function eye(){const p=$('pw');p.type=p.type==='password'?'text':'password'}
+function setMode(m){mode=m;err('');$('m1').className=m=='in'?'on':'';$('m2').className=m=='up'?'on':'';$('c2').style.display=m=='up'?'':'none';
+$('ltitle').textContent=m=='in'?'Welcome back':'Create your account';$('lsub').textContent=m=='in'?'Log in to continue learning':'Sign up to start learning DSA';
+$('sub').textContent=m=='in'?'Log in':'Sign up';$('pw').autocomplete=m=='in'?'current-password':'new-password'}
+async function submit(){err('');const em=$('em').value.trim().toLowerCase(),pw=$('pw').value;
+if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em))return err('Enter a valid email address.');
+if(pw.length<6)return err('Password must be at least 6 characters.');
+const users=LS.get('dsa_users')||{},h=await hash(pw);
+if(mode==='up'){if(pw!==$('pw2').value)return err('Passwords do not match.');if(users[em])return err('Account already exists. Please log in.');users[em]=h;LS.set('dsa_users',users)}
+else if(!users[em]||users[em]!==h)return err(users[em]?'Incorrect email or password.':'No account found. Please sign up first.');
+LS.set('dsa_session',em);$('pw').value='';$('pw2').value='';go('app')}
+function logout(){LS.set('dsa_session',null);setMode('in');go('login')}
+['em','pw','pw2'].forEach(i=>$(i).addEventListener('keydown',e=>{if(e.key==='Enter')submit()}));
+const U=()=>LS.get('dsa_session')||'guest',D=()=>LS.get('dsa_data_'+U())||{learned:[],log:[]},SD=d=>LS.set('dsa_data_'+U(),d),done=n=>D().learned.includes(n);
+function learned(i){const d=D(),p=d.learned.indexOf(i);if(p<0){d.learned.push(i);d.log.unshift({k:'learn',x:'Completed '+T[i][0],t:Date.now()})}else d.learned.splice(p,1);SD(d);render()}
+function saveQuiz(){const d=D();d.log.unshift({k:'quiz',s:qs.s,n:Q.length,t:Date.now()});SD(d)}
+function ago(t){const m=(Date.now()-t)/6e4;return m<1?'just now':m<60?Math.floor(m)+' min ago':m<1440?Math.floor(m/60)+' h ago':Math.floor(m/1440)+' d ago'}
+function streak(l){const ds=new Set(l.map(e=>new Date(e.t).toDateString()));let s=0,d=new Date();if(!ds.has(d.toDateString()))d.setDate(d.getDate()-1);while(ds.has(d.toDateString())){s++;d.setDate(d.getDate()-1)}return s}
+function stats(){const d=D(),q=d.log.filter(e=>e.k=='quiz');return{d,q,best:q.length?Math.max(...q.map(e=>e.s)):0,pct:Math.round(d.learned.length/T.length*100),st:streak(d.log)}}
+function hist(n){const l=D().log.slice(0,n);return l.length?l.map(e=>`<div class='hi'><span class='hd'>${e.k=='quiz'?'🧠':'✅'}</span><div><b>${e.k=='quiz'?'Aptitude test: '+e.s+'/'+e.n:e.x}</b><small>${ago(e.t)}</small></div></div>`).join(''):'<div class="empty">No activity yet. Start learning!</div>'}
+function ring(p){return `<svg viewBox='0 0 100 100' width='96' height='96'><circle cx='50' cy='50' r='42' fill='none' stroke='rgba(255,255,255,.25)' stroke-width='9'/><circle cx='50' cy='50' r='42' fill='none' stroke='#fff' stroke-width='9' stroke-linecap='round' stroke-dasharray='${p*2.64} 264' transform='rotate(-90 50 50)'/><text x='50' y='57' text-anchor='middle' font-size='22' font-weight='800' fill='#fff'>${p}%</text></svg>`}
+function renderHome(){const s=stats(),nx=T.findIndex((t,i)=>!s.d.learned.includes(i)),h=new Date().getHours(),g=h<12?'Good morning':h<18?'Good afternoon':'Good evening',nm=U().split('@')[0];
+$('home').innerHTML=`<div class='hh'><div><small>${g} 👋</small><h2>${nm}</h2></div><button class='tag' onclick='logout()'>Log out</button></div>
+<div class='hero2'><div class='hl'><b>Your progress</b><p>${s.d.learned.length} of ${T.length} topics learned</p><button class='cta' onclick='tab(1)'>${nx<0?'Review topics':'Next: '+T[nx][0]} →</button></div>${ring(s.pct)}</div>
+<div class='grid'><div class='st'><b>🔥 ${s.st}</b><small>day streak</small></div><div class='st'><b>🏆 ${s.best}/${Q.length}</b><small>best score</small></div><div class='st'><b>📝 ${s.q.length}</b><small>tests taken</small></div></div>
+<h3 class='sec'>Quick actions</h3><div class='qa'><button onclick='tab(1)'><i>📚</i>Learn DSA</button><button onclick='tab(2)'><i>🧠</i>Aptitude Test</button><button onclick='tab(3)'><i>📈</i>My Progress</button></div>
+<h3 class='sec'>Recent activity</h3><div class='card'>${hist(3)}</div>`}
+function renderProg(){const s=stats(),cats=[...new Set(T.map(t=>t[1]))];
+$('prog').innerHTML=`<header class='top'><h2>📈 My Progress</h2></header><div class='card'><b>Overall: ${s.pct}%</b><div class='prog' style='margin:10px 0 0'><i style='width:${s.pct}%'></i></div></div>
+<div class='card'><b>By category</b>${cats.map(c=>{const a=T.map((t,i)=>[t,i]).filter(x=>x[0][1]==c),dn=a.filter(x=>s.d.learned.includes(x[1])).length;return `<div class='cr'><span>${c}</span><div class='prog'><i style='width:${dn/a.length*100}%'></i></div><small>${dn}/${a.length}</small></div>`}).join('')}</div>
+<div class='card'><b>History</b>${hist(30)}</div><button class='tag' onclick='resetP(this)'>Reset progress</button>`}
+function resetP(b){if(b.dataset.c){SD({learned:[],log:[]});renderProg()}else{b.dataset.c=1;b.textContent='Tap again to confirm'}}
+let qs={i:0,s:0,started:false,done:false};
+function startQuiz(){qs={i:0,s:0,started:true,done:false};showQ()}
+function showQ(){const i=qs.i;if(i>=Q.length){saveQuiz();$('quiz').innerHTML=`<div class="card"><div class="score">${qs.s}/${Q.length}</div><p style="text-align:center">${qs.s>=8?'Excellent! 🎉':qs.s>=5?'Good job, keep practising! 💪':'Keep learning, you will get there! 📚'}</p><div style="text-align:center"><button class="btn pri" onclick="startQuiz()">Retry</button></div></div>`;return}
+const q=Q[i];$('quiz').innerHTML=`<div class="prog"><i style="width:${i/Q.length*100}%"></i></div><div class="card"><small style="color:var(--mut)">Question ${i+1} of ${Q.length}</small><div class="q">${q[0]}</div>${q[1].map((o,j)=>`<button class="opt" onclick="pick(${j})">${o}</button>`).join('')}<div id="fb"></div></div>`}
+function pick(j){if(qs.done)return;qs.done=true;const q=Q[qs.i],b=document.querySelectorAll('.opt');b[q[2]].classList.add('right');if(j==q[2])qs.s++;else b[j].classList.add('wrong');
+$('fb').innerHTML=`<div class="exp">${j==q[2]?'✅ Correct! ':'❌ Not quite. '}${q[3]}</div><button class="btn pri" onclick="qs.i++;qs.done=false;showQ()">${qs.i==Q.length-1?'See result':'Next →'}</button>`}
+</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}</script></body></html>
